@@ -1,0 +1,14 @@
+{
+  "appId": "com.simo.mask",
+  "appName": "Simo Mask",
+  "webDir": "www",
+  "plugins": {
+    "SystemBars": {
+      "insetsHandling": "css",
+      "initialViewportFitValueHint": "cover",
+      "style": "LIGHT",
+      "hidden": false
+    }
+  },
+  "android": {"allowMixedContent": false}
+}

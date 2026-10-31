@@ -1,0 +1,74 @@
+SIMO MASK 1.0 — APP ANDROID + WEB (GRATIS)
+======================================
+
+QUÉ HACE
+Una sola cosa: ocultar permanentemente zonas privadas de imágenes y capturas ANTES de compartirlas.
+No crea cuentas, no usa servicios externos, no sube tus fotos y no conserva originales.
+Los datos se cubren con píxeles negros en una copia PNG nueva. Selecciona todas las zonas sensibles antes de guardar.
+
+I. EDITAR EL HTML CON BLOC DE NOTAS
+1. Abre www/index.html con Bloc de notas.
+2. Modifica el diseño o los textos y guarda (Ctrl + S).
+3. Para probarlo, abre el mismo archivo con Google Chrome.
+   Pulsa “Probar un ejemplo”, desliza sobre un dato y pulsa “Guardar imagen segura”.
+
+II. CREAR APK SIN ANDROID STUDIO (GITHUB ACTIONS)
+Para evitar conflictos con la APK anterior, CREA UN REPOSITORIO NUEVO, por ejemplo Simo-Mask.
+1. Entra en https://github.com/new e inicia sesión.
+2. Pon de nombre Simo-Mask; elige repositorio PUBLIC y pulsa Create repository.
+3. Selecciona “uploading an existing file” (o Code > Add file > Upload files).
+4. En Windows, abre la carpeta DESCOMPRIMIDA de este proyecto.
+5. Selecciona TODO el CONTENIDO de esa carpeta, incluyendo .github, www, assets,
+   scripts, capacitor.config.json y package.json, y arrástralo al navegador.
+   ¡NO subas solo el ZIP ni solo index.html!
+6. Pulsa Commit changes.
+7. Entra en la pestaña Actions; abre “Compilar Simo Mask APK”.
+   Debe iniciar automáticamente; en caso contrario: Run workflow > Run workflow.
+8. Si aparece una marca verde, abre la ejecución y baja a Artifacts.
+9. Descarga “Simo-Mask-APK”, extrae el ZIP descargado y obtendrás app-debug.apk.
+10. Pasa ese APK al Android e instálalo (permiso de instalar fuentes externas si Android lo requiere).
+
+IMPORTANTE SOBRE ACTUALIZACIONES:
+- Esta aplicación usa ID com.simo.mask y NO reemplaza a SIMÓ TOOLS o Simo Hub Tools.
+- Esta compilación usa FIRMA DEBUG generada en GitHub; futuras builds podrían tener otra
+  firma y Android rechazar actualizaciones aunque el nombre del APK sea igual.
+- Para distribuir versiones permanentes y actualizar conservando datos, hay que configurar
+  una clave de firma privada y estable, guardada como secreto en GitHub.
+- No se pueden suprimir por HTML los avisos de seguridad de instalación de Android.
+
+III. PUBLICAR COMO WEB APP INSTALABLE
+1. Entra en https://app.netlify.com/drop
+2. Arrastra SOLO la carpeta www (no el proyecto completo).
+3. Netlify dará una URL HTTPS para abrir en celular y PC.
+4. En Chrome Android, abre el sitio y usa “Instalar aplicación” si está disponible,
+   o la opción correspondiente del menú. Algunos navegadores no muestran el prompt.
+5. Después de la primera visita, la aplicación web puede utilizarse sin conexión
+   mediante su service worker cuando esté instalada/cargada correctamente.
+
+IV. COMPORTAMIENTO EN ANDROID
+- La app dibuja hasta los bordes; el sistema operativo puede seguir mostrando
+  sus indicadores de estado y navegación según la versión del dispositivo.
+- En Configuración > Pantalla inmersiva puedes solicitar ocultar ambas barras en la APK.
+- Si aparecen problemas con las barras, desactiva pantalla inmersiva.
+- Desde la APK, al exportar se abre la hoja para compartir/guardar en otra aplicación.
+
+V. ESTRUCTURA DEL PROYECTO
+www/index.html                    Todo el diseño, CSS y JavaScript en un archivo
+www/manifest.webmanifest         Instalación web PWA
+www/sw.js                        Trabajo sin conexión web
+www/icon-192.png e icon-512.png  Iconos web
+assets/                          Logotipo y iconos Android
+scripts/prepare_android.py       Configura iconos y barras Android
+.github/workflows/android-apk.yml Compilador gratuito en GitHub
+package.json                     Dependencias de Capacitor
+capacitor.config.json            ID, nombre y ajustes Android
+
+VI. LIMITACIONES
+- Procesa JPG, PNG y WEBP (máx. 35 MB de entrada); imágenes muy grandes se
+  reducen al exportar para evitar agotar la memoria de teléfonos modestos.
+- Una vez que selecciones las zonas, comprueba el resultado exportado antes de compartir.
+- No elimina información que no hayas tapado, ni información presente en otros archivos.
+- La compilación de la APK no se ha ejecutado aquí en un dispositivo real: GitHub Actions
+  confirma si el proyecto compila y las pruebas reales deben hacerse en el teléfono.
+
+© 2026 Simo Mask. Proyecto editado desde un único HTML.
