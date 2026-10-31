@@ -1,0 +1,55 @@
+
+name: Compilar Simo Mask APK
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main, master]
+
+permissions:
+  contents: read
+
+jobs:
+  apk:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+
+    steps:
+      - name: Cargar proyecto
+        uses: actions/checkout@v4
+
+      - name: Instalar Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Instalar Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - name: Instalar dependencias
+        run: npm install --no-audit --no-fund
+
+      - name: Crear proyecto Android
+        run: npx cap add android
+
+      - name: Configurar iconos y pantalla
+        run: python3 scripts/prepare_android.py
+
+      - name: Sincronizar HTML
+        run: npx cap sync android
+
+      - name: Compilar APK
+        working-directory: android
+        run: |
+          chmod +x gradlew
+          ./gradlew --no-daemon assembleDebug
+
+      - name: Descargar APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: Simo-Mask-APK
+          path: android/app/build/outputs/apk/debug/app-debug.apk
+          if-no-files-found: error
